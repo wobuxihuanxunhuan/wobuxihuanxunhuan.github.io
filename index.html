@@ -184,7 +184,7 @@
             font-weight: 600;
         }
         
-        .wechat-link {
+        .wechat-button {
             display: inline-block;
             background: linear-gradient(135deg, #07c160, #09b05a);
             color: white;
@@ -198,14 +198,17 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            border: none;
+            outline: none;
         }
         
-        .wechat-link:hover {
+        .wechat-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(7, 193, 96, 0.6);
         }
         
-        .wechat-link::before {
+        .wechat-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -216,8 +219,74 @@
             transition: 0.5s;
         }
         
-        .wechat-link:hover::before {
+        .wechat-button:hover::before {
             left: 100%;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 58, 138, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .modal-title {
+            color: #ffffff;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .wechat-id {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            word-break: break-all;
+        }
+
+        .close-button {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .close-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
         
         .footer {
@@ -301,9 +370,9 @@
             <h2 class="contact-title">📞 联系我</h2>
             <p>有技术问题需要解决？想要专业定制服务？</p>
             <p>资深极客，开源社区活跃开发者</p>
-            <div class="wechat-link">
-                💬 微信号：liangdongye123456
-            </div>
+            <button class="wechat-button" onclick="openWechatModal()">
+                💬 查看微信号
+            </button>
             <p style="margin-top: 20px; color: #cbd5e1; font-size: 0.95em;">
                 专业解决方案 | 快速响应 | 耐心指导
             </p>
@@ -314,5 +383,40 @@
             <p style="margin-top: 10px; font-size: 0.8em;">开源社区活跃开发者</p>
         </div>
     </div>
+
+    <!-- 微信号弹窗 -->
+    <div id="wechatModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">📱 我的微信号</h3>
+            <div class="wechat-id">liangdongye123456</div>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">复制微信号添加好友</p>
+            <button class="close-button" onclick="closeWechatModal()">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        function openWechatModal() {
+            document.getElementById('wechatModal').style.display = 'block';
+        }
+
+        function closeWechatModal() {
+            document.getElementById('wechatModal').style.display = 'none';
+        }
+
+        // 点击弹窗外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('wechatModal');
+            if (event.target === modal) {
+                closeWechatModal();
+            }
+        }
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeWechatModal();
+            }
+        });
+    </script>
 </body>
 </html>
